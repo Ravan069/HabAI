@@ -19,13 +19,6 @@ if gemini_api_key is None:
 
 genai.configure(api_key=gemini_api_key)
 
-# Functions for PDF processing and question answering
-def get_pdf_text(pdf_docs):
-    text = ""
-    pdf_reader = PdfReader(pdf_docs)
-    for page in pdf_reader.pages:
-        text += page.extract_text()
-    return text
 
 def get_text_chunks(raw_text):
     text_splitter = CharacterTextSplitter(
@@ -94,8 +87,8 @@ def main():
     wake_up_time = st.time_input("Wake up time", value=None,key = "wake_up_time")
     sleep_time = st.time_input("Sleep", value=None, key = "sleep_time")
 
-    pdf_docs = "ilovepdf_merged.pdf" #kb for routine design in pdf format 
-    raw_text = get_pdf_text(pdf_docs)
+    
+    raw_text= "ilovepdf_merged.txt" #kb for routine design in pdf format 
     chunks = get_text_chunks(raw_text)
     vector_store = get_vector(chunks)
     chain, _ = conversation_chain(wake_up_time, sleep_time)
